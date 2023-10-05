@@ -10,7 +10,16 @@ const getData = async () => {
 const index = async () => {
     const data = await getData();
     axios.all(data).then(arr => {
-        // TODO:
+        let max = 0;
+        let maxItem = {};
+        arr.forEach(item => {
+            const contentLength = item.headers.getContentLength();
+            if (Number(item.headers.getContentLength()) > max) {
+                max = contentLength;
+                maxItem = item;
+            }
+        });
+        return maxItem.config.url;
     })
         .then(console.log);
 }
